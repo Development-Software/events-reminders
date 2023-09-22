@@ -45,7 +45,7 @@ def main(mytimer: func.TimerRequest) -> None:
     fecha_hotel = datetime.datetime(2023, 10, 10)
     diferencia_hotel = fecha_hotel - fecha_actual
 
-    if diferencia_hotel.days == 25 or diferencia_hotel.days == 18 or diferencia_hotel.days == 11 or diferencia_hotel.days == 4:
+    if diferencia_hotel.days == 25 or diferencia_hotel.days == 18 or diferencia_hotel.days == 10 or diferencia_hotel.days == 4:
         logging.info(
             f"--------Comenzando el proceso de recordatorios {diferencia_hotel.days} días para el pago de hotel --------"
         )
