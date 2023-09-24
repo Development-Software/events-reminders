@@ -65,6 +65,6 @@ jobs:
           app-name: 'events-reminders'
           slot-name: 'Production'
           package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_162597A0B5C542D786EC96C59FDD5F34 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_498579518EAB487E85060070D0E71A1E }}
           scm-do-build-during-deployment: true
           enable-oryx-build: true
