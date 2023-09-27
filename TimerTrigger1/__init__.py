@@ -15,8 +15,11 @@ def main(mytimer: func.TimerRequest) -> None:
     logging.info(f"--------Fecha actual {fecha_actual} --------")
     hora_actual = fecha_actual.strftime("%H:%M")
     logging.info(f"--------Hora actual {hora_actual} --------")
-
     logging.info("--------Recordatorios para confirmación de asistencia --------")
+    logging.info("--------Configuración de recordatorios --------")
+    logging.info("--------29 Días--------")
+    logging.info("--------14 Días--------")
+    logging.info("--------1 Días--------")
     fecha_confirmacion = datetime.datetime(2023, 10, 14)
     diferencia = fecha_confirmacion - fecha_actual
     logging.info(
@@ -27,7 +30,7 @@ def main(mytimer: func.TimerRequest) -> None:
             f"--------Comenzando el proceso de recordatorios {diferencia.days} días para el evento --------"
         )
         list_pending_confirm("pocos")
-    elif diferencia.days == 15 and hora_actual == "16:00":
+    elif diferencia.days == 14 and hora_actual == "16:00":
         logging.info(
             f"--------Comenzando el proceso de recordatorios {diferencia.days} días para el evento --------"
         )
@@ -39,6 +42,9 @@ def main(mytimer: func.TimerRequest) -> None:
         list_pending_confirm("1")
 
     logging.info("--------Recordatorios para pago de comida --------")
+    logging.info("--------Configuración de recordatorios --------")
+    logging.info("--------7 Días--------")
+    logging.info("--------2 Días--------")
     fecha_food = datetime.datetime(2023, 11, 1)
     diferencia_food = fecha_food - fecha_actual
     logging.info(
@@ -50,9 +56,16 @@ def main(mytimer: func.TimerRequest) -> None:
         )
         list_pending_food("01/11/2023")
     logging.info("--------Recordatorios para pago de hotel --------")
+    logging.info("--------Configuración de recordatorios --------")
+    logging.info("--------25 Días--------")
+    logging.info("--------18 Días--------")
+    logging.info("--------10 Días--------")
+    logging.info("--------4 Días--------")
     fecha_hotel = datetime.datetime(2023, 10, 10)
     diferencia_hotel = fecha_hotel - fecha_actual
-    if hora_actual == "16:00" and (diferencia_hotel.days == 25 or diferencia_hotel.days == 18 or diferencia_hotel.days == 10 or diferencia_hotel.days == 4):
+    logging.info(f"--------Días para llegar a la fecha compromiso {diferencia_hotel.days} --------")
+    if hora_actual == "16:00" and (
+            diferencia_hotel.days == 25 or diferencia_hotel.days == 18 or diferencia_hotel.days == 10 or diferencia_hotel.days == 4):
         logging.info(
             f"--------Comenzando el proceso de recordatorios {diferencia_hotel.days} días para el pago de hotel --------"
         )
