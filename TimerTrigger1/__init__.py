@@ -18,7 +18,7 @@ def main(mytimer: func.TimerRequest) -> None:
     logging.info("--------Recordatorios para confirmación de asistencia --------")
     logging.info("--------Configuración de recordatorios --------")
     logging.info("--------29 Días--------")
-    logging.info("--------14 Días--------")
+    logging.info("--------15 Días--------")
     logging.info("--------1 Días--------")
     fecha_confirmacion = datetime.datetime(2023, 10, 14)
     diferencia = fecha_confirmacion - fecha_actual
@@ -30,7 +30,7 @@ def main(mytimer: func.TimerRequest) -> None:
             f"--------Comenzando el proceso de recordatorios {diferencia.days} días para el evento --------"
         )
         list_pending_confirm("pocos")
-    elif diferencia.days == 14 and hora_actual == "16:00":
+    elif diferencia.days == 15 and hora_actual == "16:00":
         logging.info(
             f"--------Comenzando el proceso de recordatorios {diferencia.days} días para el evento --------"
         )
