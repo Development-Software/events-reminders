@@ -2,6 +2,7 @@ import logging
 import os
 import json
 import requests
+import datetime
 from ..functions.config import connect_db
 
 
@@ -288,4 +289,9 @@ def load_records(id_guest, name, phone, type, status, error):
 
 
 # if __name__ == "__main__":
-#     list_pending_confirm(10)
+#     hora_actual = datetime.datetime.now().strftime("%H:%M")
+#     print(hora_actual)
+#     if hora_actual > "22:30":
+#         print("es mayor")
+#     else:
+#         print("es menor")
