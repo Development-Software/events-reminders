@@ -61,13 +61,12 @@ def main(mytimer: func.TimerRequest) -> None:
     logging.info("--------Configuración de recordatorios --------")
     logging.info("--------25 Días--------")
     logging.info("--------18 Días--------")
-    logging.info("--------10 Días--------")
-    logging.info("--------4 Días--------")
+    logging.info("--------2 Días--------")
     fecha_hotel = datetime.datetime(2023, 10, 10)
     diferencia_hotel = fecha_hotel - fecha_actual
     logging.info(f"--------Días para llegar a la fecha compromiso {diferencia_hotel.days} --------")
     if hora_actual == os.getenv("HORA") and (
-            diferencia_hotel.days == 25 or diferencia_hotel.days == 18 or diferencia_hotel.days == 10 or diferencia_hotel.days == 4):
+            diferencia_hotel.days == 25 or diferencia_hotel.days == 18 or diferencia_hotel.days == 2):
         logging.info(
             f"--------Comenzando el proceso de recordatorios {diferencia_hotel.days} días para el pago de hotel --------"
         )
