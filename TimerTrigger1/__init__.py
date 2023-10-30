@@ -73,13 +73,11 @@ def main(mytimer: func.TimerRequest) -> None:
     #     )
     #     list_pending_hotel()
     fecha_str = os.getenv("FECHA")
-    logging.info(f"fecha str {fecha_str}")
-    # fecha = datetime.datetime.strptime(fecha_str, "%d/%m/%Y")
-    # logging.info(f"fecha {fecha}")
-    logging.info(f"fecha actual {fecha_actual}")
-    logging.info(f"hora {os.getenv('HORA')}")
+    fecha = datetime.datetime.strptime(fecha_str, "%d/%m/%Y")
+    fecha_param = fecha.strftime("%d/%m/%Y")
+    short_actual= fecha_actual.strftime("%d/%m/%Y")
     logging.info("--------Recordatorios para observaciones de invitados --------")
-    if hora_actual == os.getenv("HORA"):  # and fecha == fecha_actual:
+    if hora_actual == os.getenv("HORA") and short_actual == fecha_param:
         logging.info(
             "--------Comenzando el proceso de recordatorio observaciones de invitación --------"
         )

@@ -346,9 +346,12 @@ def load_records(id_guest, name, phone, type, status, error):
 
 
 # if __name__ == "__main__":
-#     hora_actual = datetime.datetime.now().strftime("%H:%M")
-#     logging.info(hora_actual)
-#     if hora_actual > "22:30":
-#         logging.info("es mayor")
-#     else:
-#         logging.info("es menor")
+#     fecha_str = os.getenv("FECHA")
+#     fecha = datetime.datetime.strptime(fecha_str, "%d-%m-%Y")
+#     fecha_param= datetime.datetime.strftime(fecha, "%d-%m-%Y")
+#     fecha_actual = datetime.datetime.strftime(datetime.datetime.now(), "%d-%m-%Y")
+#     print(fecha)
+#     print(fecha_param)
+#     print(fecha_actual)
+#     if fecha_param==fecha_actual:
+#         print("hola")
