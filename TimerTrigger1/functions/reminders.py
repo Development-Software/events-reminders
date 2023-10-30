@@ -3,10 +3,10 @@ import os
 import json
 import requests
 import datetime
-#from ..functions.config import connect_db
+from ..functions.config import connect_db
 
 
-from config import connect_db
+#from config import connect_db
 
 def reminder_last(phone,name):
     try:
