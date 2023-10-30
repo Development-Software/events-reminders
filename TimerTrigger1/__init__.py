@@ -74,7 +74,10 @@ def main(mytimer: func.TimerRequest) -> None:
         list_pending_hotel()
     fecha_str = os.getenv("FECHA")
     fecha = datetime.datetime.strptime(fecha_str, "%d/%m/%Y")
-
+    logging.info(f"fecha {fecha}")
+    logging.info(f"fecha actual {fecha_actual}")
+    logging.info(f"hora {os.getenv('HORA')}")
+    logging.info("--------Recordatorios para observaciones de invitados --------")
     if hora_actual == os.getenv(
             "HORA") and fecha == fecha_actual:
         logging.info(
