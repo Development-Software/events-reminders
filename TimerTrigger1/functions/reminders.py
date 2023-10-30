@@ -39,8 +39,8 @@ def reminder_last(phone,name):
         response = requests.request("POST", url, headers=headers, data=payload)
         return response
     except Exception as ex:
-        print("[ERROR] reminder_last")
-        print("[ERROR] ", ex)
+        logging.info("[ERROR] reminder_last")
+        logging.info("[ERROR] ", ex)
         return False
 def reminder_confirm(phone, name, days):
     try:
@@ -76,8 +76,8 @@ def reminder_confirm(phone, name, days):
             video_confirm(phone)
         return response
     except Exception as ex:
-        print("[ERROR] alert_admin")
-        print("[ERROR] ", ex)
+        logging.info("[ERROR] alert_admin")
+        logging.info("[ERROR] ", ex)
         return False
 
 def video_confirm(phone):
@@ -116,8 +116,8 @@ def video_confirm(phone):
         response = requests.request("POST", url, headers=headers, data=payload)
         return response
     except Exception as ex:
-        print("[ERROR] alert_admin")
-        print("[ERROR] ", ex)
+        logging.info("[ERROR] alert_admin")
+        logging.info("[ERROR] ", ex)
         return False
 
 
@@ -153,8 +153,8 @@ def reminder_pay_food(phone, name, day):
         response = requests.request("POST", url, headers=headers, data=payload)
         return response
     except Exception as ex:
-        print("[ERROR] alert_admin")
-        print("[ERROR] ", ex)
+        logging.info("[ERROR] alert_admin")
+        logging.info("[ERROR] ", ex)
         return False
 
 
@@ -197,8 +197,8 @@ def reminder_pay_hotel(phone, name, hotel, rooms, amount_x_room, amount_total, p
         return response
 
     except Exception as ex:
-        print("[ERROR] alert_admin")
-        print("[ERROR] ", ex)
+        logging.info("[ERROR] alert_admin")
+        logging.info("[ERROR] ", ex)
         return False
 
 
@@ -228,8 +228,8 @@ def list_pending_confirm(days):
         else:
             return False
     except Exception as ex:
-        print("[ERROR] list_pending_confirm")
-        print("[ERROR] ", ex)
+        logging.info("[ERROR] list_pending_confirm")
+        logging.info("[ERROR] ", ex)
         logging.info(f"--------{ex}--------")
         return False
 
@@ -255,8 +255,8 @@ def list_pending_food(date):
                     load_records(item[2], item[1], item[0], "desayuno", "error", response.text)
             return True
     except Exception as ex:
-        print("[ERROR] list_perding_food")
-        print("[ERROR] ", ex)
+        logging.info("[ERROR] list_perding_food")
+        logging.info("[ERROR] ", ex)
         logging.info(f"--------{ex}--------")
         return False
 
@@ -285,8 +285,8 @@ def list_pending_hotel():
                     load_records(item[0], item[2], item[1], "hotel", "error", response.text)
             return True
     except Exception as ex:
-        print("[ERROR] list_perding_food")
-        print("[ERROR] ", ex)
+        logging.info("[ERROR] list_perding_food")
+        logging.info("[ERROR] ", ex)
         logging.info(f"--------{ex}--------")
         return False
 
@@ -311,8 +311,8 @@ def list_reminder_confirm():
         else:
             return False
     except Exception as ex:
-        print("[ERROR] list_reminder_confirm")
-        print("[ERROR] ", ex)
+        logging.info("[ERROR] list_reminder_confirm")
+        logging.info("[ERROR] ", ex)
         return False
 
 def prueba_conexion():
@@ -326,8 +326,8 @@ def prueba_conexion():
         else:
             return False
     except Exception as ex:
-        print("[ERROR] prueba_conexion")
-        print("[ERROR] ", ex)
+        logging.info("[ERROR] prueba_conexion")
+        logging.info("[ERROR] ", ex)
         return False
 
 
@@ -340,15 +340,15 @@ def load_records(id_guest, name, phone, type, status, error):
         conn.commit()
         return True
     except Exception as ex:
-        print("[ERROR] load_records")
-        print("[ERROR] ", ex)
+        logging.info("[ERROR] load_records")
+        logging.info("[ERROR] ", ex)
         return False
 
 
 # if __name__ == "__main__":
 #     hora_actual = datetime.datetime.now().strftime("%H:%M")
-#     print(hora_actual)
+#     logging.info(hora_actual)
 #     if hora_actual > "22:30":
-#         print("es mayor")
+#         logging.info("es mayor")
 #     else:
-#         print("es menor")
+#         logging.info("es menor")
