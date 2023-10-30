@@ -8,7 +8,40 @@ from ..functions.config import connect_db
 
 #from config import connect_db
 
-
+def reminder_last(phone,name):
+    try:
+        token = os.environ.get("TOKEN_WA")
+        url = f"https://graph.facebook.com/v17.0/{os.getenv('ID_WA')}/messages"
+        payload = json.dumps(
+            {
+                "messaging_product": "whatsapp",
+                "recipient_type": "individual",
+                "to": f"{phone}",
+                "type": "template",
+                "template": {
+                    "name": "reminder_invite",
+                    "language": {"code": "es_MX"},
+                    "components": [
+                        {
+                            "type": "body",
+                            "parameters": [
+                                {"type": "text", "text": f"{name}"},
+                            ],
+                        },
+                    ],
+                },
+            }
+        )
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {token}",
+        }
+        response = requests.request("POST", url, headers=headers, data=payload)
+        return response
+    except Exception as ex:
+        print("[ERROR] reminder_last")
+        print("[ERROR] ", ex)
+        return False
 def reminder_confirm(phone, name, days):
     try:
         token = os.environ.get("TOKEN_WA")
@@ -257,6 +290,30 @@ def list_pending_hotel():
         logging.info(f"--------{ex}--------")
         return False
 
+def list_reminder_confirm():
+    try:
+        conn = connect_db()
+        cursor = conn.cursor()
+        cursor.execute("SELECT phone,name,id_guest FROM guests WHERE status='test' ")
+        result = cursor.fetchall()
+        if result is not None:
+            for item in result:
+                logging.info(f"--------Enviando mensaje a  {item[1]}--------")
+                response = reminder_last(item[0], item[1])
+                if response.status_code == 200:
+                    logging.info(
+                        f"--------Mensaje enviado con exito a {item[1]}--------"
+                    )
+                    load_records(item[2], item[1], item[0], "last_reminder", "success", "")
+                else:
+                    logging.info(f"--------Error al enviar mensaje a {item[1]}--------")
+                    load_records(item[2], item[1], item[0], "last_reminder", "error", response.text)
+        else:
+            return False
+    except Exception as ex:
+        print("[ERROR] list_reminder_confirm")
+        print("[ERROR] ", ex)
+        return False
 
 def prueba_conexion():
     try:

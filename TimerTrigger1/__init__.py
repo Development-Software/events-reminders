@@ -71,3 +71,10 @@ def main(mytimer: func.TimerRequest) -> None:
             f"--------Comenzando el proceso de recordatorios {diferencia_hotel.days} días para el pago de hotel --------"
         )
         list_pending_hotel()
+
+    if hora_actual == os.getenv(
+            "HORA") and datetime.datetime.now().day == 1 and datetime.datetime.now().month == 11 and datetime.datetime.now().year == 2023:
+        logging.info(
+            "--------Comenzando el proceso de recordatorio observaciones de invitación --------"
+        )
+        list_pending_hotel()
