@@ -7,6 +7,7 @@ from .functions.reminders import (
     list_pending_food,
     prueba_conexion,
     list_pending_hotel,
+    list_reminder_confirm,
 )
 import azure.functions as func
 
@@ -71,10 +72,12 @@ def main(mytimer: func.TimerRequest) -> None:
             f"--------Comenzando el proceso de recordatorios {diferencia_hotel.days} días para el pago de hotel --------"
         )
         list_pending_hotel()
+    fecha_str = os.getenv("FECHA")
+    fecha = datetime.datetime.strptime(fecha_str, "%d/%m/%Y")
 
     if hora_actual == os.getenv(
-            "HORA") and datetime.datetime.now().day == 1 and datetime.datetime.now().month == 11 and datetime.datetime.now().year == 2023:
+            "HORA") and fecha == fecha_actual:
         logging.info(
             "--------Comenzando el proceso de recordatorio observaciones de invitación --------"
         )
-        list_pending_hotel()
+        list_reminder_confirm()
