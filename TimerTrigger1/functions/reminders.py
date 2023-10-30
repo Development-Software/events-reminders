@@ -294,7 +294,7 @@ def list_reminder_confirm():
     try:
         conn = connect_db()
         cursor = conn.cursor()
-        cursor.execute("SELECT phone,name,id_guest FROM guests WHERE status='test' ")
+        cursor.execute("SELECT phone,name,id_guest FROM guests WHERE status='confirmed' ")
         result = cursor.fetchall()
         if result is not None:
             for item in result:
