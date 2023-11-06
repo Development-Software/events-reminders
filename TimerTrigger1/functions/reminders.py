@@ -3,10 +3,10 @@ import os
 import json
 import requests
 import datetime
-# from ..functions.config import connect_db
+from ..functions.config import connect_db
 
 
-from config import connect_db
+#from config import connect_db
 
 
 def reminder_last(phone, name):
@@ -438,4 +438,12 @@ def load_records(id_guest, name, phone, type, status, error):
 
 
 if __name__ == "__main__":
-    program()
+    logging.info("--------Comenzando el proceso de recordatorios --------")
+    fecha_actual = datetime.datetime.now()
+    logging.info(f"--------Fecha actual {fecha_actual} --------")
+    hora_actual = fecha_actual.strftime("%H:%M")
+    logging.info(f"--------Hora actual {hora_actual} --------")
+    fecha_itinerario = os.getenv("FECHA_ITINERARIO")
+    fecha_i = datetime.datetime.strptime(fecha_itinerario, "%d/%m/%Y")
+    fecha_param_i = fecha_i.strftime("%d/%m/%Y")
+    short_actual_i = fecha_actual.strftime("%d/%m/%Y")
