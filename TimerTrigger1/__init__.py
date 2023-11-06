@@ -7,7 +7,8 @@ from .functions.reminders import (
     list_pending_food,
     prueba_conexion,
     list_pending_hotel,
-    list_reminder_confirm,program
+    list_reminder_confirm,
+    program,
 )
 import azure.functions as func
 
@@ -89,7 +90,5 @@ def main(mytimer: func.TimerRequest) -> None:
     short_actual_i = fecha_actual.strftime("%d/%m/%Y")
     logging.info("--------Recordatorios para itinerario --------")
     if hora_actual == os.getenv("HORA") and short_actual_i == fecha_param_i:
-        logging.info(
-            "--------Comenzando el proceso de envio de itinerario --------"
-        )
+        logging.info("--------Comenzando el proceso de envio de itinerario --------")
         program()
