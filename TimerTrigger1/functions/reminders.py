@@ -385,7 +385,7 @@ def program():
         conn = connect_db()
         cursor = conn.cursor()
         cursor.execute(
-            "SELECT phone,name,hotel FROM guests g INNER JOIN statement S on S.id_guest=g.id_guest ")
+            "SELECT phone,name,hotel FROM guests g INNER JOIN statement S on S.id_guest=g.id_guest WHERE g.id_guest='084c62d6-34f5-11ee-b12a-0022482cbbcc'")
         result = cursor.fetchall()
         if result is not None:
             for item in result:
