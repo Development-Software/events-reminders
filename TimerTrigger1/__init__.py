@@ -7,7 +7,7 @@ from .functions.reminders import (
     list_pending_food,
     prueba_conexion,
     list_pending_hotel,
-    list_reminder_confirm,
+    list_reminder_confirm,program
 )
 import azure.functions as func
 
@@ -72,13 +72,24 @@ def main(mytimer: func.TimerRequest) -> None:
     #         f"--------Comenzando el proceso de recordatorios {diferencia_hotel.days} días para el pago de hotel --------"
     #     )
     #     list_pending_hotel()
-    fecha_str = os.getenv("FECHA")
-    fecha = datetime.datetime.strptime(fecha_str, "%d/%m/%Y")
-    fecha_param = fecha.strftime("%d/%m/%Y")
-    short_actual= fecha_actual.strftime("%d/%m/%Y")
-    logging.info("--------Recordatorios para observaciones de invitados --------")
-    if hora_actual == os.getenv("HORA") and short_actual == fecha_param:
+    # fecha_str = os.getenv("FECHA")
+    # fecha = datetime.datetime.strptime(fecha_str, "%d/%m/%Y")
+    # fecha_param = fecha.strftime("%d/%m/%Y")
+    # short_actual = fecha_actual.strftime("%d/%m/%Y")
+    # logging.info("--------Recordatorios para observaciones de invitados --------")
+    # if hora_actual == os.getenv("HORA") and short_actual == fecha_param:
+    #     logging.info(
+    #         "--------Comenzando el proceso de recordatorio observaciones de invitación --------"
+    #     )
+    #     list_reminder_confirm()
+
+    fecha_itinerario = os.getenv("FECHA_ITINERARIO")
+    fecha_i = datetime.datetime.strptime(fecha_itinerario, "%d/%m/%Y")
+    fecha_param_i = fecha_i.strftime("%d/%m/%Y")
+    short_actual_i = fecha_actual.strftime("%d/%m/%Y")
+    logging.info("--------Recordatorios para itinerario --------")
+    if hora_actual == os.getenv("HORA") and short_actual_i == fecha_param_i:
         logging.info(
-            "--------Comenzando el proceso de recordatorio observaciones de invitación --------"
+            "--------Comenzando el proceso de envio de itinerario --------"
         )
-        list_reminder_confirm()
+        program()

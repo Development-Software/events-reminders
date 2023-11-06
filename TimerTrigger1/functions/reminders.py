@@ -3,12 +3,13 @@ import os
 import json
 import requests
 import datetime
-from ..functions.config import connect_db
+# from ..functions.config import connect_db
 
 
-#from config import connect_db
+from config import connect_db
 
-def reminder_last(phone,name):
+
+def reminder_last(phone, name):
     try:
         token = os.environ.get("TOKEN_WA")
         url = f"https://graph.facebook.com/v17.0/{os.getenv('ID_WA')}/messages"
@@ -42,6 +43,67 @@ def reminder_last(phone,name):
         logging.info("[ERROR] reminder_last")
         logging.info("[ERROR] ", ex)
         return False
+
+
+def message_itinerario(phone, name, hotel):
+    try:
+        template = "itinerario"
+        link = ""
+        if hotel == "Hotel Villa Pralaya":
+            link = "466NkfD"
+        elif hotel == "Quinta Mina":
+            link = "3FKoqaX"
+
+        token = os.environ.get("TOKEN_WA")
+        url = f"https://graph.facebook.com/v17.0/{os.getenv('ID_WA')}/messages"
+        payload = json.dumps(
+            {
+                "messaging_product": "whatsapp",
+                "recipient_type": "individual",
+                "to": f"{phone}",
+                "type": "template",
+                "template": {
+                    "name": f"{template}",
+                    "language": {"code": "es_MX"},
+                    "components": [
+                        {
+                            "type": "header",
+                            "parameters": [
+                                {
+                                    "type": "text",
+                                    "text": f"{hotel}",
+                                }
+                            ],
+                        },
+                        {
+                            "type": "body",
+                            "parameters": [
+                                {"type": "text", "text": f"{name}"},
+                                {"type": "text", "text": f"{hotel}"},
+                            ],
+                        },
+                        {
+                            "type": "button",
+                            "sub_type": "url",
+                            "index": "0",
+                            "parameters": [{"type": "text", "text": f"{link}"}],
+                        }
+                    ],
+                },
+            }
+        )
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {token}",
+        }
+        response = requests.request("POST", url, headers=headers, data=payload)
+        return response
+    except Exception as ex:
+        logging.info("[ERROR] reminder_last")
+        logging.info("[ERROR] ", ex)
+        return False
+
+
 def reminder_confirm(phone, name, days):
     try:
         token = os.environ.get("TOKEN_WA")
@@ -79,6 +141,7 @@ def reminder_confirm(phone, name, days):
         logging.info("[ERROR] alert_admin")
         logging.info("[ERROR] ", ex)
         return False
+
 
 def video_confirm(phone):
     try:
@@ -210,7 +273,7 @@ def list_pending_confirm(days):
         conn = connect_db()
         cursor = conn.cursor()
         cursor.execute("SELECT phone,name,id_guest FROM guests WHERE status in('sent','income')")
-        #cursor.execute("SELECT phone,name,id_guest FROM guests WHERE status in('test')")
+        # cursor.execute("SELECT phone,name,id_guest FROM guests WHERE status in('test')")
         result = cursor.fetchall()
         if result is not None:
             for item in result:
@@ -290,6 +353,7 @@ def list_pending_hotel():
         logging.info(f"--------{ex}--------")
         return False
 
+
 def list_reminder_confirm():
     try:
         conn = connect_db()
@@ -314,6 +378,34 @@ def list_reminder_confirm():
         logging.info("[ERROR] list_reminder_confirm")
         logging.info("[ERROR] ", ex)
         return False
+
+
+def program():
+    try:
+        conn = connect_db()
+        cursor = conn.cursor()
+        cursor.execute(
+            "SELECT phone,name,hotel FROM guests g INNER JOIN statement S on S.id_guest=g.id_guest ")
+        result = cursor.fetchall()
+        if result is not None:
+            for item in result:
+                logging.info(f"--------Enviando mensaje a  {item[1]}--------")
+                response = message_itinerario(item[0], item[1], item[2])
+                if response.status_code == 200:
+                    logging.info(
+                        f"--------Mensaje enviado con exito a {item[1]}--------"
+                    )
+                    load_records(item[2], item[1], item[0], "last_reminder", "success", "")
+                else:
+                    logging.info(f"--------Error al enviar mensaje a {item[1]}--------")
+                    load_records(item[2], item[1], item[0], "last_reminder", "error", response.text)
+        else:
+            return False
+    except Exception as ex:
+        logging.info("[ERROR] program")
+        logging.info("[ERROR] ", ex)
+        return False
+
 
 def prueba_conexion():
     try:
@@ -345,13 +437,5 @@ def load_records(id_guest, name, phone, type, status, error):
         return False
 
 
-# if __name__ == "__main__":
-#     fecha_str = os.getenv("FECHA")
-#     fecha = datetime.datetime.strptime(fecha_str, "%d-%m-%Y")
-#     fecha_param= datetime.datetime.strftime(fecha, "%d-%m-%Y")
-#     fecha_actual = datetime.datetime.strftime(datetime.datetime.now(), "%d-%m-%Y")
-#     print(fecha)
-#     print(fecha_param)
-#     print(fecha_actual)
-#     if fecha_param==fecha_actual:
-#         print("hola")
+if __name__ == "__main__":
+    program()
